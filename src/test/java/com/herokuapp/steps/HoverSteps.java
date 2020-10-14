@@ -1,13 +1,10 @@
 package com.herokuapp.steps;
 
 import io.cucumber.java8.En;
-import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.matchesText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.herokuapp.pages.HoversPage.generateXpath;
-import static com.herokuapp.pages.HoversPage.user3;
+import static com.herokuapp.pages.HoversPage.*;
+import static com.herokuapp.pages.UserPage.PAGE_TITLE;
 
 
 /**
@@ -19,14 +16,38 @@ import static com.herokuapp.pages.HoversPage.user3;
 public class HoverSteps implements En {
     public HoverSteps() {
 
-        When("I hover avatar 3", () -> {
-            $(generateXpath("3")).hover();
+        When("I hover avatar {}", (String avatarIndex) -> {
+            $(generateXpath(avatarIndex)).hover();
         });
 
-        Then("I observe the user3 username", () -> {
-            assert ($(user3).getText().contains("user3"));
+        Then("I observe the {} username", (String username) -> {
+            assert !username.equals("user1") || ($(USER_1).getText().contains(username));
+            assert !username.equals("user2") || ($(USER_2).getText().contains(username));
+            assert !username.equals("user3") || ($(USER_3).getText().contains(username));
+        });
+
+        Then("If i observe the {} ,i do not observe others username", (String userName) -> {
+            if (userName.equals("user1")) {
+                assert (!$(USER_2).isDisplayed());
+                assert (!$(USER_3).isDisplayed());
+            }
+            if (userName.equals("user2")) {
+                assert (!$(USER_1).isDisplayed());
+                assert (!$(USER_3).isDisplayed());
+            }
+            if (userName.equals("user3")) {
+                assert (!$(USER_1).isDisplayed());
+                assert (!$(USER_2).isDisplayed());
+            }
+        });
+
+        When("I click on link view user {} {}", (String userName, String avatarId) -> {
+            $(generateXpath(avatarId)).hover();
+            $(generateXpathViewLink(avatarId)).click();
+        });
+
+        Then("I go to the user page {} and see the text {}", (String userName, String pageText) -> {
+            assert ($(PAGE_TITLE).getText()).equals(pageText);
         });
     }
-
-
 }
