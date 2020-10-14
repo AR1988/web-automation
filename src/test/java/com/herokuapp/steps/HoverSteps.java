@@ -30,12 +30,6 @@ public class HoverSteps implements En {
                     assert ($(USER_3).getText().contains(username));
                     break;
             }
-//            if (username.equals("user1"))
-//                assert ($(USER_1).getText().contains(username));
-//            if (username.equals("user2"))
-//                assert ($(USER_2).getText().contains(username));
-//            if (username.equals("user3"))
-//                assert ($(USER_3).getText().contains(username));
         });
 
         Then("I do not observe others usernames besides {}", (String userName) -> {
@@ -54,7 +48,6 @@ public class HoverSteps implements En {
         });
 
         When("I click on the link view user under the avatar {}", (String avatarId) -> {
-            $(generateXpath(avatarId)).hover();
             $(generateXpathViewLink(avatarId)).click();
         });
 
