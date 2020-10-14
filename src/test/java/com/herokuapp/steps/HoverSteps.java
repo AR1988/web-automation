@@ -16,17 +16,29 @@ import static com.herokuapp.pages.UserPage.PAGE_TITLE;
 public class HoverSteps implements En {
     public HoverSteps() {
 
-        When("I hover avatar {}", (String avatarIndex) -> {
-            $(generateXpath(avatarIndex)).hover();
-        });
+        When("I hover avatar {}", (String avatarIndex) -> $(generateXpath(avatarIndex)).hover());
 
         Then("I observe the {} username", (String username) -> {
-            assert !username.equals("user1") || ($(USER_1).getText().contains(username));
-            assert !username.equals("user2") || ($(USER_2).getText().contains(username));
-            assert !username.equals("user3") || ($(USER_3).getText().contains(username));
+            switch (username) {
+                case "user1":
+                    assert ($(USER_1).getText().contains(username));
+                    break;
+                case "user2":
+                    assert ($(USER_2).getText().contains(username));
+                    break;
+                case "user3":
+                    assert ($(USER_3).getText().contains(username));
+                    break;
+            }
+//            if (username.equals("user1"))
+//                assert ($(USER_1).getText().contains(username));
+//            if (username.equals("user2"))
+//                assert ($(USER_2).getText().contains(username));
+//            if (username.equals("user3"))
+//                assert ($(USER_3).getText().contains(username));
         });
 
-        Then("If i observe the {} ,i do not observe others username", (String userName) -> {
+        Then("I do not observe others usernames besides {}", (String userName) -> {
             if (userName.equals("user1")) {
                 assert (!$(USER_2).isDisplayed());
                 assert (!$(USER_3).isDisplayed());
@@ -41,12 +53,12 @@ public class HoverSteps implements En {
             }
         });
 
-        When("I click on link view user {} {}", (String userName, String avatarId) -> {
+        When("I click on the link view user under the avatar {}", (String avatarId) -> {
             $(generateXpath(avatarId)).hover();
             $(generateXpathViewLink(avatarId)).click();
         });
 
-        Then("I go to the user page {} and see the text {}", (String userName, String pageText) -> {
+        Then("I go to the user page {} and i see the text {}", (String userName, String pageText) -> {
             assert ($(PAGE_TITLE).getText()).equals(pageText);
         });
     }

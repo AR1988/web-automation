@@ -18,10 +18,6 @@ public class HoversPage extends BasePage {
     public static final By USER_2 = By.xpath("//div[2]/div/h5");
     public static final By USER_3 = By.xpath("//div[3]/div/h5");
 
-    public static final By LINK_USER_1 = By.xpath("//div/div[1]/div/a");
-    public static final By LINK_USER_2 = By.xpath("//div/div[2]/div/a");
-    public static final By LINK_USER_3 = By.xpath("//div/div[3]/div/a");
-
     public HoversPage(WebDriver driver) {
         super(driver);
     }

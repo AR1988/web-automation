@@ -9,10 +9,10 @@ Feature: Hovers Page
   Scenario Outline: Hover avatars
     When I hover avatar <avatar_id>
     Then I observe the <user_name> username
-    Then If i observe the <user_name> ,i do not observe others username
+    But I do not observe others usernames besides <user_name>
 
-    When I click on link view user <user_name> <avatar_id>
-    Then I go to the user page <user_name> and see the text <text>
+    When I click on the link view user under the avatar <avatar_id>
+    Then I go to the user page <user_name> and i see the text <text>
 
     Examples:
       | avatar_id | user_name | text      |
